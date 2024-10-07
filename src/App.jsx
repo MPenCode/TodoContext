@@ -5,12 +5,12 @@ import ToDoList from './components/ToDoList';
 import { useToDo } from './context/contextToDo';
  
 const App = () => {
-  const {setFilter} = useToDo();
+  const {} = useToDo();
  
   return (
     <div className='container mx-auto p-4'>
       <AddToDo />
-      <FilterComponent setFilter={setFilter} />
+      <FilterComponent />
       <ToDoList />
     </div>
   );

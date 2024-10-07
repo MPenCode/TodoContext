@@ -2,7 +2,7 @@ import { useToDo } from '../context/contextToDo';
 import ToDoItem from './ToDoItem';
 
 const ToDosList = () => {
-  const { todos, toggleTodo, filter } = useToDo();
+  const { todos, toggleTodo, filter, state } = useToDo();
 
     const filteredTodos = todos.filter((todo) => {
         if (filter === 'all') return true;
@@ -15,7 +15,7 @@ const ToDosList = () => {
         <div>
             <ul>
                 {filteredTodos.map((todo) => (
-                    <ToDoItem todo={todo} key={todo.id} toggleTodo={toggleTodo} />
+                    <ToDoItem todo={todo} key={todo.id} />
                 ))}
             </ul>
         </div>
@@ -23,3 +23,4 @@ const ToDosList = () => {
 };
 
 export default ToDosList;
+

@@ -12,42 +12,45 @@ export const TodoProv = ({ children }) => {
   const [todos, setTodos] = useState(
     JSON.parse(localStorage.getItem("todos")) || []
   );
-  const [filter, setFilter] = useState('all');
+//   const [filter, setFilter] = useState("all");
 
   const initialState = {
-    todos: [],
-    filter: 'all',
-    filteredTodos: [],
+    filter: "all",
+    filteredTodos: true,
   };
 
-    const filterReducer = (state, action) => {
-        switch (action.type) {
-            case 'SET_FILTER':
-                return { ...state, filter: action.payload };
-            case 'FILTER_TODOS':
-                return { ...state, filteredTodos: state.todos.filter((todo) => {
-                    if (state.filter === 'all') return true;
-                    if (state.filter === 'active') return !todo.completed;
-                    if (state.filter === 'completed') return todo.completed;
-                    return true;
-                }) };
-            default:
-                return state;
-        }
-    };
+  const filterReducer = (state, action) => {
+    switch (action.type) {
+      case "SET_FILTER":
+        return { ...state, filter: action.payload };
+      case "all":
+        return { ...state, filteredTodos: todos.filter(todo => todo)};
+        case "active":
+        return { ...state, filteredTodos: todos.filter(todo => !todo.completed)};
+        case "completed":
+        return { ...state, filteredTodos: todos.filter(todo => todo.completed) };
+      default:
+        return state;
+    }
+  };
 
-    const [state, dispatch] = useReducer(filterReducer, { ...initialState, todos });
+  const [state, dispatch] = useReducer(filterReducer, {
+    ...initialState,
+    todos,
+  });
 
-    useEffect(() => {
-        dispatch({ type: 'FILTER_TODOS' });
-      }, [state.filter, todos]);
+  useEffect(() => {
+    dispatch({ type: "FILTER_TODOS" });
+  }, [state.filter, todos]);
 
   useEffect(() => {
     localStorage.setItem("todos", JSON.stringify(todos));
   }, [todos]);
 
   return (
-    <ToDoContext.Provider value={{ todos, setTodos, filter,setFilter,state, dispatch }}>
+    <ToDoContext.Provider
+      value={{ todos, setTodos, state, dispatch }}
+    >
       {children}
     </ToDoContext.Provider>
   );
