@@ -3,54 +3,53 @@ import {
   createContext,
   useReducer,
   useEffect,
-  useState,
 } from "react";
 
 const ToDoContext = createContext();
 
 export const TodoProv = ({ children }) => {
-  const [todos, setTodos] = useState(
-    JSON.parse(localStorage.getItem("todos")) || []
-  );
-//   const [filter, setFilter] = useState("all");
 
   const initialState = {
-    filter: "all",
-    filteredTodos: true,
+    todos: [],
+    filter: 'all',
+    addtext: '',
+    changetext: '',
   };
 
-  const filterReducer = (state, action) => {
-    switch (action.type) {
-      case "SET_FILTER":
-        return { ...state, filter: action.payload };
-      case "all":
-        return { ...state, filteredTodos: todos.filter(todo => todo)};
-        case "active":
-        return { ...state, filteredTodos: todos.filter(todo => !todo.completed)};
-        case "completed":
-        return { ...state, filteredTodos: todos.filter(todo => todo.completed) };
-      default:
-        return state;
+    const filterReducer = (state, action) => {
+        switch (action.type) {
+            case 'filter':
+              return { ...state, filter: action.payload };
+            case 'todos':
+              return { ...state, todos: action.payload };
+            case 'addtext':
+              return { ...state, addtext: action.payload };
+            case 'changetext':
+              return { ...state, changetext: action.payload };
+            
+            default:
+                return state;
+        }
+    };
+
+    const [state, dispatch] = useReducer(filterReducer, initialState);
+
+  useEffect(() => {
+    const storedTodos = JSON.parse(localStorage.getItem("todos")) || [];
+    if (JSON.stringify(storedTodos) !== JSON.stringify(state.todos)) {
+      dispatch({ type: 'todos', payload: storedTodos });
     }
-  };
-
-  const [state, dispatch] = useReducer(filterReducer, {
-    ...initialState,
-    todos,
-  });
+  }, []);
 
   useEffect(() => {
-    dispatch({ type: "FILTER_TODOS" });
-  }, [state.filter, todos]);
-
-  useEffect(() => {
-    localStorage.setItem("todos", JSON.stringify(todos));
-  }, [todos]);
+    const storedTodos = JSON.parse(localStorage.getItem("todos")) || [];
+    if (JSON.stringify(storedTodos) !== JSON.stringify(state.todos)) {
+      localStorage.setItem("todos", JSON.stringify(state.todos));
+    }
+  }, [state.todos]);
 
   return (
-    <ToDoContext.Provider
-      value={{ todos, setTodos, state, dispatch }}
-    >
+    <ToDoContext.Provider value={{ state, dispatch }}>
       {children}
     </ToDoContext.Provider>
   );
