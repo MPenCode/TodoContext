@@ -3,51 +3,48 @@ import {
   createContext,
   useReducer,
   useEffect,
-  useState,
+  // useState,
 } from "react";
 
 const ToDoContext = createContext();
 
 export const TodoProv = ({ children }) => {
-  const [todos, setTodos] = useState(
-    JSON.parse(localStorage.getItem("todos")) || []
-  );
-  const [filter, setFilter] = useState('all');
+  // const [todos, setTodos] = useState(
+  //   JSON.parse(localStorage.getItem("todos")) || []
+  // );
+  // const [filter, setFilter] = useState('all');
 
   const initialState = {
     todos: [],
     filter: 'all',
-    filteredTodos: [],
+    addtext: '',
+    toggletodo: null,
   };
 
     const filterReducer = (state, action) => {
         switch (action.type) {
-            case 'SET_FILTER':
-                return { ...state, filter: action.payload };
-            case 'FILTER_TODOS':
-                return { ...state, filteredTodos: state.todos.filter((todo) => {
-                    if (state.filter === 'all') return true;
-                    if (state.filter === 'active') return !todo.completed;
-                    if (state.filter === 'completed') return todo.completed;
-                    return true;
-                }) };
+            case 'filter':
+              return { ...state, filter: action.payload };
+            case 'todos':
+              return { ...state, todos: action.payload };
+            case 'addtext':
+              return { ...state, addtext: action.payload };
+            case 'toggletodo':
+              return { ...state, toggletodo: action.payload };
+            
             default:
                 return state;
         }
     };
 
-    const [state, dispatch] = useReducer(filterReducer, { ...initialState, todos });
-
-    useEffect(() => {
-        dispatch({ type: 'FILTER_TODOS' });
-      }, [state.filter, todos]);
+    const [state, dispatch] = useReducer(filterReducer, initialState);
 
   useEffect(() => {
-    localStorage.setItem("todos", JSON.stringify(todos));
-  }, [todos]);
+    localStorage.setItem("todos", JSON.stringify(state.todos));
+  }, [state.todos]);
 
   return (
-    <ToDoContext.Provider value={{ todos, setTodos, filter,setFilter,state, dispatch }}>
+    <ToDoContext.Provider value={{ state, dispatch }}>
       {children}
     </ToDoContext.Provider>
   );

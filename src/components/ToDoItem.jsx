@@ -1,12 +1,13 @@
-import { FaEdit, FaTrash, FaCheckCircle, FaTimesCircle } from 'react-icons/fa';
 import { useToDo } from '../context/contextToDo';
+import { FaEdit, FaTrash, FaCheckCircle, FaTimesCircle } from 'react-icons/fa';
 
 const TodoItem = ({ todo }) => {
-  const { setTodos } = useToDo();
+  const { setTodos, state, dispatch } = useToDo();
 
   const updateTodo = (todo) => {
     const newText = prompt('Update todo text:', todo.text);
     if (newText !== null && newText.trim() !== '') {
+      // dispatch({ type: 'todos', payload: newText });
       setTodos((prev) =>
         prev.map((t) => (t.id === todo.id ? { ...t, text: newText } : t))
       );
