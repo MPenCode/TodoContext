@@ -5,6 +5,7 @@ const AddToDo = () => {
  
   const handleSubmit = e => {
     e.preventDefault();
+    localStorage.setItem('todos', JSON.stringify(state.todos));
 
     if (state.addtext.trim() === '') {
       alert('Please enter a todo item!');
@@ -15,7 +16,7 @@ const AddToDo = () => {
     const newTodo = { id: newId, text: state.addtext, completed: false };
 
     dispatch({ type: 'todos', payload: [...state.todos, newTodo] });
-    dispatch({ type: 'addtext', payload: newTodo });
+    dispatch({ type: 'addtext', payload: "" });
   };
  
   return (

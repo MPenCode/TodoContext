@@ -18,7 +18,7 @@ export const TodoProv = ({ children }) => {
     todos: [],
     filter: 'all',
     addtext: '',
-    toggletodo: null,
+    changetext: '',
   };
 
     const filterReducer = (state, action) => {
@@ -29,8 +29,8 @@ export const TodoProv = ({ children }) => {
               return { ...state, todos: action.payload };
             case 'addtext':
               return { ...state, addtext: action.payload };
-            case 'toggletodo':
-              return { ...state, toggletodo: action.payload };
+            case 'changetext':
+              return { ...state, changetext: action.payload };
             
             default:
                 return state;
@@ -40,7 +40,17 @@ export const TodoProv = ({ children }) => {
     const [state, dispatch] = useReducer(filterReducer, initialState);
 
   useEffect(() => {
-    localStorage.setItem("todos", JSON.stringify(state.todos));
+    const storedTodos = JSON.parse(localStorage.getItem("todos")) || [];
+    if (JSON.stringify(storedTodos) !== JSON.stringify(state.todos)) {
+      dispatch({ type: 'todos', payload: storedTodos });
+    }
+  }, []);
+
+  useEffect(() => {
+    const storedTodos = JSON.parse(localStorage.getItem("todos")) || [];
+    if (JSON.stringify(storedTodos) !== JSON.stringify(state.todos)) {
+      localStorage.setItem("todos", JSON.stringify(state.todos));
+    }
   }, [state.todos]);
 
   return (
