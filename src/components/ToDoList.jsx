@@ -2,7 +2,7 @@ import { useToDo } from '../context/contextToDo';
 import ToDoItem from './ToDoItem';
 
 const ToDosList = () => {
-  const { state, dispatch } = useToDo();
+  const { state } = useToDo();
 
     const filteredTodos = state.todos.filter((todo) => {
         if (state.filter === 'all') return true;

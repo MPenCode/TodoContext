@@ -3,16 +3,11 @@ import {
   createContext,
   useReducer,
   useEffect,
-  // useState,
 } from "react";
 
 const ToDoContext = createContext();
 
 export const TodoProv = ({ children }) => {
-  // const [todos, setTodos] = useState(
-  //   JSON.parse(localStorage.getItem("todos")) || []
-  // );
-  // const [filter, setFilter] = useState('all');
 
   const initialState = {
     todos: [],

@@ -1,6 +1,7 @@
 // import { useState } from 'react';
 import AddToDo from './components/AddToDo';
 import FilterComponent from './components/FilterComponent';
+import Footer from './components/Footer';
 import ToDoList from './components/ToDoList';
 // import { useToDo } from './context/contextToDo';
  
@@ -11,6 +12,7 @@ const App = () => {
       <AddToDo />
       <FilterComponent />
       <ToDoList />
+      <Footer />
     </div>
   );
 };

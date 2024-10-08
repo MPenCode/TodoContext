@@ -1,7 +1,7 @@
 import {useToDo} from '../context/contextToDo';
 
 const FilterComponent = () => {
-    const { state,dispatch } = useToDo();
+    const { dispatch } = useToDo();
    
     return (
       <div className='mb-4 flex space-x-2'>
