@@ -1,3 +1,4 @@
+import {Link} from 'react-router-dom'
 const Hero = () => {
   return (
     <div
@@ -12,7 +13,7 @@ const Hero = () => {
       <p className="mb-5">
         You need to work on something? Let us help you with that.
       </p>
-      <button className="btn btn-primary">Get Started</button>
+      <Link to="/todos"><button className="btn btn-primary">Get Started</button></Link>
     </div>
   </div>
 </div>
