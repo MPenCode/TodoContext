@@ -2,28 +2,38 @@ import { useToDo } from '../context/contextToDo';
 import { FaEdit, FaTrash, FaCheckCircle, FaTimesCircle } from 'react-icons/fa';
 
 const TodoItem = ({ todo }) => {
-  const { setTodos, state, dispatch } = useToDo();
+  const { state, dispatch } = useToDo();
+
+  const updateTodoText = (todos, todoId, newText) => {
+    return todos.map((t) => (t.id === todoId ? { ...t, text: newText } : t));
+  };
+
+  const toggleTodoCompletionStatus = (todos, todoId) => {
+    return todos.map((t) =>
+      t.id === todoId ? { ...t, completed: !t.completed } : t
+    );
+  };
+
+  const removeTodo = (todos, todoId) => {
+    return todos.filter((e) => e.id !== todoId);
+  };
 
   const updateTodo = (todo) => {
     const newText = prompt('Update todo text:', todo.text);
     if (newText !== null && newText.trim() !== '') {
-      // dispatch({ type: 'todos', payload: newText });
-      setTodos((prev) =>
-        prev.map((t) => (t.id === todo.id ? { ...t, text: newText } : t))
-      );
+      const updatedTodos = updateTodoText(state.todos, todo.id, newText);
+      dispatch({ type: 'todos', payload: updatedTodos });
     }
   };
 
   const toggleTodoCompletion = (todo) => {
-    setTodos((prev) =>
-      prev.map((t) =>
-        t.id === todo.id ? { ...t, completed: !t.completed } : t
-      )
-    );
+    const updatedTodos = toggleTodoCompletionStatus(state.todos, todo.id);
+    dispatch({ type: 'todos', payload: updatedTodos });
   };
 
   const deleteTodo = (todo) => {
-    setTodos((prev) => prev.filter((e) => e.id !== todo.id));
+    const updatedTodos = removeTodo(state.todos, todo.id);
+    dispatch({ type: 'todos', payload: updatedTodos });
   };
 
   return (

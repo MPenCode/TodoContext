@@ -15,7 +15,7 @@ const ToDosList = () => {
         <div>
             <ul>
                 {filteredTodos.map((todo) => (
-                    <ToDoItem todo={todo} key={todo.id} toggleTodo={toggleTodo} />
+                    <ToDoItem todo={todo} key={todo.id} />
                 ))}
             </ul>
         </div>
