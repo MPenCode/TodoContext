@@ -17,8 +17,7 @@ const FilterComponent = () => {
         <button
           onClick={() =>
             dispatch({ type: 'filter', payload: "completed" })} 
-          className='bg-gray-200 px-3 py-1 rounded'
-        >
+          className='bg-gray-200 px-3 py-1 rounded'>
           Completed
         </button>
       </div>
@@ -26,3 +25,4 @@ const FilterComponent = () => {
   };
    
   export default FilterComponent;
+
