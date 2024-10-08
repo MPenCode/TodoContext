@@ -5,6 +5,7 @@ import {BrowserRouter, Routes, Route} from 'react-router-dom';
 import Hero from './pages/Hero';
  
 const App = () => {
+
  
   return (
     <BrowserRouter>

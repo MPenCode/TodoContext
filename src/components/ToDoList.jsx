@@ -4,6 +4,7 @@ import ToDoItem from './ToDoItem';
 const ToDosList = () => {
   const { state } = useToDo();
 
+
     const filteredTodos = state.todos.filter((todo) => {
         if (state.filter === 'all') return true;
         if (state.filter === 'active') return !todo.completed;
@@ -23,3 +24,4 @@ const ToDosList = () => {
 };
 
 export default ToDosList;
+
