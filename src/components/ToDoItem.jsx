@@ -91,7 +91,7 @@ const TodoItem = ({ todo }) => {
           )}
         </label>
         {isEditing ? (
-          <button onClick={() => saveTodo(todo)} className="text-green-500">
+          <button onClick={() => saveTodo(todo)} className='bg-blue-500 text-white px-4 py-2 rounded'>
             Save
           </button>
         ) : (
